@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Settings, Turntable-1</title>
+  <link rel="icon" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/nebula.css">
+  <link rel="stylesheet" href="/static/settings.css">
+  <script src="/static/settings.js" defer></script>
+</head>
+<body class="nb-sky">
+  <header class="st-head">
+    <a class="st-back" href="/" aria-label="Back to Turntable-1">&larr;</a>
+    <h1>Turntable<span>-1</span> <small>Settings</small> <small class="ver" id="version"></small></h1>
+    <button type="button" class="st-link" id="signout" hidden>Sign out</button>
+  </header>
+
+  <!-- first run: create the admin password; afterwards: sign in -->
+  <section class="st-gate" id="gate" hidden>
+    <h2 id="gate-title"></h2>
+    <p id="gate-about"></p>
+    <form id="gate-form" autocomplete="on">
+      <label>Password <input type="password" id="gate-pw" autocomplete="current-password" required minlength="8"></label>
+      <label id="gate-pw2-row" hidden>Again <input type="password" id="gate-pw2" autocomplete="new-password" minlength="8"></label>
+      <p class="st-err" id="gate-err" role="alert"></p>
+      <button type="submit" class="st-btn gold" id="gate-go"></button>
+    </form>
+  </section>
+
+  <main class="st-main" id="main" hidden>
+    <nav class="st-nav" id="nav" aria-label="Sections"></nav>
+    <select class="st-pick" id="pick" aria-label="Section"></select>
+    <div class="st-body" id="body"></div>
+  </main>
+
+  <div class="st-bar" id="bar" hidden>
+    <span id="bar-text"></span>
+    <button type="button" class="st-btn" id="discard">Discard</button>
+    <button type="button" class="st-btn gold" id="save">Save</button>
+  </div>
+  <div class="st-toast" id="toast" role="status" hidden></div>
+</body>
+</html>

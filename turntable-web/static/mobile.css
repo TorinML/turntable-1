@@ -1,0 +1,141 @@
+/* Turntable-1's mobile layout: phones only (html.mobile, set by layout.js). The page's own sections,
+   arranged into five tabs, at the phone's width. Nothing here applies on tablets or computers. */
+html.mobile body { padding: 0 0 calc(80px + env(safe-area-inset-bottom)); min-width: 0; }
+html.mobile .wrap { max-width: none; padding: 0 12px; }
+html.mobile main > section[data-tab]:not(.tab-on) { display: none !important; }
+html.mobile main > section { margin-top: 12px !important; }
+html.mobile .panel { padding: 16px 14px; border-radius: 24px; }
+
+/* the header */
+html.mobile .sign { gap: 10px; padding: calc(10px + env(safe-area-inset-top)) 2px 0; }
+html.mobile .sign .logo { width: 34px; height: 34px; }
+html.mobile .sign h1 { font-size: 26px; }
+html.mobile .onair { padding: 6px 12px; font-size: 13px; margin-left: auto; }
+html.mobile .castbtn { padding: 6px 10px; font-size: 12px; margin-right: 6px; }
+html.mobile .castbtn + .onair { margin-left: 0; }
+
+/* the tab bar */
+.mtabs[hidden] { display: none; }
+html.mobile .mtabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; padding: 6px 4px calc(8px + env(safe-area-inset-bottom));
+  background: #0b081f; border-top: 1px solid #201951; }
+html.mobile .mtabs button { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; border: 0; background: none;
+  color: #8f84c6; font: inherit; font-size: 11.5px; font-weight: 800; cursor: pointer; }
+html.mobile .mtabs svg { width: 24px; height: 24px; }
+html.mobile .mtabs button[aria-current="page"] { color: var(--gold); }
+
+/* the floating player sits above the tab bar */
+html.mobile .deck { bottom: calc(74px + env(safe-area-inset-bottom)) !important; }
+html.mobile .toast { bottom: calc(90px + env(safe-area-inset-bottom)); }
+
+/* --- Now ------------------------------------------------------------------------------------ */
+html.mobile .hero.np { display: block; padding: 16px 14px; border-radius: 24px; }
+html.mobile .np-stage { display: block; width: 100%; max-width: 330px; height: auto; margin: -6px auto 4px; }
+html.mobile .np-main { min-width: 0; }
+html.mobile .np-top { flex-wrap: wrap; gap: 8px; }
+html.mobile .np-actions { width: 100%; display: flex; gap: 8px; }
+html.mobile #listen { flex: 1; justify-content: center; font-size: 16px; padding: 12px 16px; }
+html.mobile .hero h2, html.mobile #title { font-size: 34px; line-height: 1.08; margin-top: 10px; }
+html.mobile .hero .artist { font-size: 19px; }
+html.mobile .hero .meta { font-size: 15px; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+html.mobile .seglabels { font-size: 12.5px; }
+html.mobile .idlecards { grid-template-columns: 1fr 1fr; gap: 10px; }
+html.mobile .np-foot { flex-wrap: wrap; gap: 10px; }
+html.mobile #tag-now { padding: 10px 16px; }
+html.mobile .gc-strip { grid-template-columns: 1fr; gap: 6px; margin-top: 12px; }
+html.mobile .gc-tag { justify-self: start; font-size: 10px; padding: 4px 10px; }
+html.mobile .ticker.gc { height: 40px; }
+html.mobile .ticker.gc .tape { font-size: 17px; }
+.m-say[hidden] { display: none; }
+html.mobile .m-say { display: flex; gap: 12px; align-items: center; width: 100%; margin-top: 12px; padding: 12px 14px; border: 0; border-radius: 20px; text-align: left;
+  background: linear-gradient(160deg, #261d63, #1c144e); box-shadow: inset 0 0 0 2px var(--gold); color: inherit; font: inherit; cursor: pointer; }
+html.mobile .m-face { width: 40px; height: 40px; flex: none; }
+html.mobile .m-face .mface { width: 40px; height: 40px; }
+html.mobile .m-text b { display: block; font-size: 15px; font-weight: 800; color: #fff4dc; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+html.mobile .m-text small { display: block; margin-top: 4px; font-size: 10.5px; font-weight: 900; letter-spacing: .08em; color: var(--gold); }
+html.mobile .strip { display: block; padding: 14px; }
+html.mobile .strip .tonight { margin-bottom: 10px; }
+html.mobile .strip .topchips { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding-bottom: 6px; scrollbar-width: none; }
+html.mobile .strip .seg { margin-top: 8px; }
+
+/* --- Beepnik ---------------------------------------------------------------------------------- */
+html.mobile .companion { padding: 16px 14px; }
+html.mobile .pet-head { flex-wrap: wrap; }
+html.mobile .say { margin: 10px 0 22px; padding: 14px 16px 12px; }
+html.mobile .say p { font-size: 17px; }
+html.mobile .say-wave { display: none; }
+html.mobile .pet-mid { grid-template-columns: 1fr; gap: 12px; }
+html.mobile .critter { width: 100%; height: auto; }
+html.mobile .cluster { grid-template-columns: 1fr 1fr; gap: 10px; }
+html.mobile .lamps { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+html.mobile .lamps > .orbit-lamp { grid-column: 1 / -1; }
+html.mobile .mission { grid-template-columns: auto 1fr; gap: 10px 12px; }
+html.mobile .mission-prog, html.mobile .mission-left { grid-column: 2; }
+html.mobile .pet-foot { flex-wrap: wrap; gap: 10px 18px; }
+html.mobile .term-bar { flex-wrap: wrap; }
+html.mobile .term-body { font-size: 12px; }
+
+/* --- Log ------------------------------------------------------------------------------------- */
+html.mobile .flight-grid { grid-template-columns: 1fr; gap: 14px; }
+html.mobile .flight-log { contain: none; height: auto; max-height: none; min-height: 0; overflow: visible; padding-right: 0; }
+
+/* --- Cargo ----------------------------------------------------------------------------------- */
+html.mobile .dusty-row { grid-template-columns: 1fr; gap: 10px; }
+html.mobile .crate-body .sleeves, html.mobile .sleeves { grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+
+/* --- dialogs: full width ------------------------------------------------------------------------ */
+html.mobile dialog.panel { width: calc(100vw - 16px); max-width: none; max-height: calc(100vh - 40px); padding: 18px 16px; }
+html.mobile .dlg-top { grid-template-columns: 1fr; gap: 16px; }
+html.mobile .dlg-top img, html.mobile .dlg-top .cover { width: 100%; max-width: 260px; height: auto; margin: 0 auto; }
+html.mobile .sides { grid-template-columns: 1fr; }
+html.mobile .vpop { max-width: calc(100vw - 16px); }
+
+/* --- refinements ----------------------------------------------------------------------------- */
+/* Now: the record and title lead; the buttons come after the timeline */
+html.mobile .np-main { display: flex; flex-direction: column; }
+html.mobile .np-top { display: contents; }
+html.mobile .np-top .when { order: 0; align-self: flex-start; }
+html.mobile #title { order: 1; }
+html.mobile #artist { order: 2; }
+html.mobile .np-main .meta { order: 3; }
+html.mobile #timeline { order: 4; }
+html.mobile #idlecards { order: 5; }
+html.mobile .np-actions { order: 6; margin-top: 14px; }
+html.mobile .np-foot { order: 7; }
+html.mobile .hero-toggle { display: none !important; }
+html.mobile .m-text { min-width: 0; text-align: left; }
+
+/* section titles stack above their summaries */
+html.mobile .panel h3 { font-size: 26px; }
+html.mobile .flight-head, html.mobile .crate-head, html.mobile .logbook-head { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+html.mobile .flight-head .note, html.mobile .logbook-head .note { font-size: 13.5px; }
+
+/* Cargo: the crate dig stacks, scaled to the phone; the cargo bar and tools stack too */
+html.mobile .dig-wrap { flex-direction: column; align-items: center; gap: 0; }
+html.mobile .dig { transform: scale(.82); transform-origin: top center; margin-bottom: -44px; }
+html.mobile .dig-info { width: 100%; padding: 0 2px; }
+html.mobile .dig-info h2 { font-size: 26px; }
+html.mobile .cratebar { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+html.mobile .cratebar .search, html.mobile .cratebar .search input { width: 100%; }
+html.mobile .crate-toggle { align-self: flex-start; }
+html.mobile .crate-tools { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+
+/* Stars: a taller map on a phone */
+html.mobile .logbook-tools, html.mobile .chart-tools { flex-wrap: wrap; }
+/* the status lamps: one per row on a phone, each with room for its line */
+html.mobile .lamps { grid-template-columns: 1fr !important; }
+
+/* --- fixes: long titles can't widen the page; the terminal reads at phone width ------------------- */
+/* a column's minimum is its widest unbreakable line, unless capped: cap every column at the screen */
+html.mobile .flight-grid { grid-template-columns: minmax(0, 1fr); }
+html.mobile .flight-grid > *, html.mobile main > section, html.mobile .flight-log * { min-width: 0; }
+html.mobile .flight-log { overflow-x: hidden; overflow-wrap: anywhere; }
+html.mobile .radar { width: 100%; max-width: 100%; margin: 0 auto; }
+/* terminal lines: time and voice on one line, the message beneath at full width */
+html.mobile .term-body { grid-template-columns: max-content minmax(0, 1fr); row-gap: 0; }
+html.mobile .term-body .dim:not(.ln) { display: none; }
+html.mobile .term-body .t { grid-column: 1 / -1; margin-bottom: 8px; }
+
+html.mobile .gearlink { width: 36px; height: 36px; margin-right: 6px; }
+html.mobile .gearlink svg { width: 19px; height: 19px; }
+html.mobile .gearlink ~ .onair { margin-left: 0; }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Google TV launcher banner (320 x 180): Beepnik on orbit, on deep space -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp" android:height="180dp" android:viewportWidth="320" android:viewportHeight="180">
+    <path android:fillColor="#0E1730" android:pathData="M0,0 L320,0 L320,180 L0,180 Z" />
+    <path android:fillColor="#1B2A55" android:pathData="M60,90 m-120,0 a120,90 0 1,0 240,0 a120,90 0 1,0 -240,0" />
+    <path android:fillColor="#FFFFFF" android:pathData="M30,30 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0 M270,40 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0 M240,150 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0 M110,160 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0 M290,110 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0 M180,20 m-1,0 a1,1 0 1,0 2,0 a1,1 0 1,0 -2,0" />
+    <path android:strokeColor="#F2B544" android:strokeWidth="2" android:strokeAlpha="0.6" android:fillColor="#00000000"
+        android:pathData="M160,96 m-120,0 a120,34 0 1,0 240,0 a120,34 0 1,0 -240,0" />
+    <path android:strokeColor="#AEB9C6" android:strokeWidth="3" android:pathData="M160,66 L160,52" />
+    <path android:fillColor="#E5432D" android:pathData="M160,48 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0" />
+    <path android:fillColor="#1F3A6E" android:strokeColor="#F2B544" android:strokeWidth="2" android:pathData="M108,80 L132,80 L132,100 L108,100 Z M188,80 L212,80 L212,100 L188,100 Z" />
+    <path android:strokeColor="#AEB9C6" android:strokeWidth="3" android:pathData="M132,90 L138,90 M182,90 L188,90 M150,110 L142,132 M157,112 L154,136 M163,112 L166,136 M170,110 L178,132" />
+    <path android:fillColor="#DDE3EA" android:strokeColor="#1B2238" android:strokeWidth="2" android:pathData="M160,90 m-23,0 a23,23 0 1,0 46,0 a23,23 0 1,0 -46,0" />
+    <path android:fillColor="#1B2238" android:pathData="M151,86 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 M169,86 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <path android:strokeColor="#1B2238" android:strokeWidth="2.5" android:fillColor="#00000000" android:pathData="M151,97 Q160,104 169,97" />
+</vector>

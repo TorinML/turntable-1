@@ -1,0 +1,78 @@
+# Builds the image for Raspberry Pi (arm64) and PCs (amd64), on GitHub's registry:
+#   a release tag (v1.30.0)  ->  1.30.0, 1.30 and latest, plus a GitHub Release with the installer
+#   a push to main           ->  edge (for trying changes before a release)
+name: docker
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  # nothing private gets published: scan the files and the whole history first
+  privacy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check for keys, tokens, private addresses and personal details
+        env:
+          PRIVATE_VALUES: ${{ secrets.PRIVATE_VALUES }}   # optional: your own values, comma-separated (masked in the log)
+        run: python3 tools/privacy_check.py --history --also "$PRIVATE_VALUES"
+
+  build:
+    needs: privacy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/turntable-1
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=edge,branch=main
+      - id: version
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else echo "value=main-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"; fi
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: VERSION=${{ steps.version.outputs.value }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  release:
+    # a release tag also publishes a GitHub Release, with the installer and Compose files attached
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            install.sh
+            docker-compose.yml
+            .env.example
+          generate_release_notes: true

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Turntable-1 TV</string>
+    <string name="tv_menu_title">Turntable-1</string>
+    <string name="tv_reload">Reload</string>
+    <string name="tv_change">Change server address</string>
+    <string name="tv_exit">Exit</string>
+</resources>

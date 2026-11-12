@@ -1,0 +1,27 @@
+# your own install's files: never committed
+config/
+data/
+legacy/
+secrets.toml
+turntable.toml
+*.db
+*.db-wal
+*.db-shm
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Android Studio
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.iml
+*.apk
+
+
+.DS_Store

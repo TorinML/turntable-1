@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Beepnik, simplified: a chrome probe with solar panels and an antenna (inside the 66dp safe zone) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <path android:strokeColor="#AEB9C6" android:strokeWidth="2.4" android:pathData="M54,34 L54,26" />
+    <path android:fillColor="#E5432D" android:pathData="M54,22.5 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <path android:fillColor="#1F3A6E" android:strokeColor="#F2B544" android:strokeWidth="1.6" android:pathData="M24,48 L38,48 L38,60 L24,60 Z" />
+    <path android:fillColor="#1F3A6E" android:strokeColor="#F2B544" android:strokeWidth="1.6" android:pathData="M70,48 L84,48 L84,60 L70,60 Z" />
+    <path android:strokeColor="#AEB9C6" android:strokeWidth="2.4" android:pathData="M38,54 L42,54 M66,54 L70,54" />
+    <path android:strokeColor="#AEB9C6" android:strokeWidth="2.2" android:pathData="M47,66 L42,80 M52,67 L50,82 M56,67 L58,82 M61,66 L66,80" />
+    <path android:fillColor="#DDE3EA" android:strokeColor="#1B2238" android:strokeWidth="1.6" android:pathData="M54,54 m-14,0 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0" />
+    <path android:fillColor="#1B2238" android:pathData="M48.5,51 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0 M59.5,51 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path android:strokeColor="#1B2238" android:strokeWidth="1.8" android:pathData="M49,58 Q54,62 59,58" />
+</vector>

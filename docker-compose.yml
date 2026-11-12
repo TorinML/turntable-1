@@ -1,0 +1,75 @@
+# Turntable-1. Your choices live in .env (see .env.example), so this file can be replaced on updates.
+#   Start:   docker compose up -d
+#   Update:  docker compose pull && docker compose up -d
+# Then open http://<this machine>:8080 and create the admin password.
+
+x-turntable: &turntable
+  image: ${IMAGE:-ghcr.io/torinml/turntable-1}:${TAG:-latest}
+  restart: unless-stopped
+  environment:
+    TZ: ${TZ:-UTC}
+  volumes:
+    - ${CONFIG_DIR:-./config}:/config
+    - ${DATA_DIR:-./data}:/data
+    - telemetry:/run/turntable
+  read_only: true
+  tmpfs:
+    - /tmp
+
+services:
+  icecast:
+    <<: *turntable
+    command: icecast
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; socket.create_connection(('127.0.0.1', 8000), 3)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+
+  capture:
+    <<: *turntable
+    command: capture
+    devices:
+      - /dev/snd:/dev/snd                    # the turntable's USB audio
+    group_add:
+      - "${AUDIO_GID:-29}"                   # the host's audio group (the installer fills it in)
+    depends_on:
+      icecast:
+        condition: service_healthy
+
+  core:
+    <<: *turntable
+    command: core
+    volumes:
+      - ${CONFIG_DIR:-./config}:/config
+      - ${DATA_DIR:-./data}:/data
+      - ${ARCHIVE_DIR:-./archive}:/archive   # album archive: point ARCHIVE_DIR at your NAS
+      - telemetry:/run/turntable
+    depends_on:
+      icecast:
+        condition: service_healthy
+
+  web:
+    <<: *turntable
+    command: web
+    volumes:
+      - ${CONFIG_DIR:-./config}:/config
+      - ${DATA_DIR:-./data}:/data
+      - ${ARCHIVE_DIR:-./archive}:/archive:ro
+      - telemetry:/run/turntable
+    ports:
+      - "${HTTP_PORT:-8080}:8080"            # the site; the stream is served through it at /stream
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/now', timeout=4)"]
+      interval: 30s
+      timeout: 6s
+      start_period: 30s
+    depends_on:
+      icecast:
+        condition: service_started
+
+volumes:
+  telemetry:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Turntable-1</title>
+  <link rel="stylesheet" href="/static/tv.css">
+  <!-- Google Cast receiver: the TV view, with the stream played by the Cast media player -->
+  <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+  <script src="/static/tv-cast.js"></script>
+  <script src="/static/probe.js" defer></script>
+  <script src="/static/tv.js" defer></script>
+</head>
+<body class="cast">
+  <cast-media-player id="cast-player"></cast-media-player>
+  <div id="stage" data-mode="idle"></div>
+</body>
+</html>

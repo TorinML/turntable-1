@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1260">
+  <script src="/static/layout.js"></script>
+  <meta name="theme-color" content="#0e1730">
+  <title>Turntable-1</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/nebula.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/mobile.css">
+  <link rel="stylesheet" href="/static/screens.css">
+</head>
+<body class="nb-sky">
+  <!-- Shared drawings -->
+  <svg width="0" height="0" class="defs" aria-hidden="true">
+    <defs>
+      <radialGradient id="chrome" cx="35%" cy="30%" r="70%">
+        <stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#d5dde6"/>
+        <stop offset=".8" stop-color="#7f8ea3"/><stop offset="1" stop-color="#5b6a80"/>
+      </radialGradient>
+      <linearGradient id="silver" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#eef2f6"/><stop offset="1" stop-color="#8d9bb0"/>
+      </linearGradient>
+      <symbol id="sat" viewBox="0 0 64 64">
+        <g stroke="#c9d3de" stroke-width="2" stroke-linecap="round">
+          <path d="M33 34 L5 52"/><path d="M33 34 L9 60"/><path d="M33 34 L17 63"/><path d="M33 34 L3 43"/>
+        </g>
+        <circle cx="40" cy="26" r="14" fill="url(#chrome)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="wrap">
+    <header class="sign">
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#sat"/></svg>
+      <h1>Turntable<span>-1</span></h1>
+      <nav class="dtabs" id="dtabs" aria-label="Sections">
+        <button type="button" data-tab="now">Now</button>
+        <button type="button" data-tab="beepnik">Beepnik</button>
+        <button type="button" data-tab="log">Log</button>
+        <button type="button" data-tab="cargo">Cargo</button>
+        <button type="button" data-tab="stars">Stars</button>
+      </nav>
+      <!-- Google Cast: the TV view on a screen, or the stream on a speaker (Chrome only, once set up) -->
+      <button type="button" class="castbtn" id="cast-btn" hidden aria-label="Cast to a TV or speaker">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 18v3h3c0-1.66-1.34-3-3-3zm0-4v2c2.76 0 5 2.24 5 5h2c0-3.87-3.13-7-7-7zm0-4v2c4.97 0 9 4.03 9 9h2c0-6.08-4.93-11-11-11zm20-7H3c-1.1 0-2 .9-2 2v3h2V5h18v14h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+        <span id="cast-text">Cast</span>
+      </button>
+      <a class="gearlink" href="/static/settings.html" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.6a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.5L6.5 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.4 7.4 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.4 7.4 0 0 0 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" fill="currentColor" transform="translate(-1 0)"/></svg>
+      </a>
+      <p class="onair" id="onair" data-state="idle">
+        <svg viewBox="0 0 26 20" aria-hidden="true"><circle cx="5" cy="10" r="3"/><path d="M11 4 q5 6 0 12"/><path d="M16 1 q8 9 0 18"/></svg>
+        <span id="onair-text">Standby</span>
+      </p>
+    </header>
+
+    <main>
+      <!-- Now playing: the record (Beepnik rides its orbit), the side's timeline and the flip timer -->
+      <section class="hero np" id="hero" data-state="idle" aria-live="polite" data-tab="now">
+        <svg class="np-stage" id="stage" viewBox="-30 -40 330 330" role="img" aria-label="The record on the turntable">
+          <defs><clipPath id="label-clip"><circle cx="135" cy="135" r="46"/></clipPath></defs>
+          <g transform="rotate(-18 135 135)"><ellipse cx="135" cy="135" rx="150" ry="52" class="orbit"/></g>
+          <circle cx="141" cy="141" r="122" fill="rgba(0,0,0,.35)"/>
+          <circle cx="135" cy="135" r="122" fill="#151517"/>
+          <g id="grooves" fill="none" stroke="#202024" stroke-width="1"></g>
+          <circle cx="135" cy="135" r="46" class="label-blank"/>
+          <g class="spin" id="label-spin">
+            <image id="label-art" x="89" y="89" width="92" height="92" clip-path="url(#label-clip)" preserveAspectRatio="xMidYMid slice"/>
+            <circle cx="135" cy="96" r="2.2" fill="#fff" opacity=".55"/>
+          </g>
+          <circle cx="135" cy="135" r="47" fill="none" stroke="#aeb9c6" stroke-width="4"/>
+          <circle cx="135" cy="135" r="3" fill="#0e1730"/>
+          <g transform="rotate(-18 135 135)"><g id="rider">
+            <g transform="rotate(18)"><svg id="beep-rider" x="-73" y="-43" width="145" height="86" viewBox="50 26 220 130"></svg></g>
+            <animateMotion dur="24s" repeatCount="indefinite" path="M285,135 A150,52 0 1,1 -15,135 A150,52 0 1,1 285,135"/>
+          </g></g>
+          <!-- parked on top of the record while nothing plays -->
+          <svg id="beep-parked" x="58" y="-37" width="153" height="90" viewBox="50 26 220 130"></svg>
+        </svg>
+
+        <div class="np-main">
+          <div class="np-top">
+            <p class="when" id="when">Nothing on the platter</p>
+            <div class="np-actions">
+              <button type="button" class="btn sm live" id="listen" aria-pressed="false"><span class="live-dot"></span><span id="listen-text">Listen live</span></button>
+            </div>
+          </div>
+          <h2 id="title">Ready when you are</h2>
+          <p class="artist" id="artist"></p>
+          <p class="meta"><span id="album-line">Drop the needle and the track appears here within about half a minute.</span>
+            <button type="button" class="crate-line" id="crate-line" hidden></button>
+            <button type="button" class="not-this" id="not-this" hidden>Not this?</button></p>
+          <div class="timeline" id="timeline" hidden>
+            <div class="segs" id="segs"></div>
+            <div class="seglabels" id="seglabels"></div>
+          </div>
+          <div class="readouts" id="readouts" hidden></div>
+          <div class="idlecards" id="idlecards" hidden></div>
+          <div class="shelf" id="idle-shelf" hidden></div>
+          <!-- playing back a recording: the player takes over this card -->
+          <div class="np-replay" id="np-replay" hidden>
+            <div class="np-replay-top">
+              <span class="nb-k" id="replay-label">Playing back</span>
+              <button type="button" class="nb-btn" id="replay-stop">&#9632; Stop</button>
+            </div>
+            <button type="button" class="nb-sub replay-live" id="replay-live" hidden></button>
+          </div>
+          <div class="np-foot">
+            <button type="button" class="btn ghost" id="tag-now" hidden>Tag it</button>
+            <p class="flip" id="flip"></p>
+            <div class="vu" id="vu" hidden title="Bass, mids and treble, live"><i id="vu-bass"></i><i id="vu-mid"></i><i id="vu-treble"></i></div>
+            <p class="listen-note" id="listen-note" role="status"></p>
+          </div>
+        </div>
+        <!-- mobile: Beepnik's latest line, on the Now tab (tap for his tab) -->
+        <button type="button" class="m-say" id="m-say" hidden><span class="m-face" id="m-face"></span><span class="m-text"><b id="m-say-text"></b><small id="m-say-who"></small></span></button>
+        <!-- Ground Control: one transmission per track, across the card's full width while a record plays -->
+        <div class="gc-strip" id="gc" hidden>
+          <span class="gc-tag">GROUND CONTROL</span>
+          <div class="ticker gc" id="gc-ticker"><div class="tape" id="gc-tape"></div><div class="glass"></div></div>
+        </div>
+      </section>
+
+      <!-- Tonight and most played, in one slim strip -->
+      <section class="panel strip" id="strip" aria-label="Tonight and most played" data-tab="now">
+        <div class="tonight" id="tonight"></div>
+        <div class="topchips" id="chips"><span class="chips-title">Most played</span></div>
+        <div class="seg" role="group" aria-label="Time period">
+          <button type="button" data-days="7">7 d</button>
+          <button type="button" data-days="30" aria-pressed="true">30 d</button>
+          <button type="button" data-days="0">All</button>
+        </div>
+      </section>
+
+      <!-- Beepnik at a glance, beside Now playing: his scene, his line, his needs. Opens his tab. -->
+      <section class="nowbeep nb-card" id="nowbeep" data-tab="now" aria-label="Beepnik, at a glance">
+        <button type="button" class="nowbeep-open" id="nowbeep-open" aria-label="Open Beepnik's tab">
+          <svg class="nowbeep-scene" id="nb-critter" viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Beepnik"></svg>
+        </button>
+        <div class="nowbeep-body">
+          <div class="nb-bubble" id="nb-say"><span id="nb-say-text">Standing by.</span><div class="nb-k" id="nb-say-who">BEEPNIK</div></div>
+          <div class="nb-dials" id="nb-dials"></div>
+          <div class="nb-status" id="nb-status"></div>
+          <div class="nb-sub nb-medals" id="nb-medals" hidden></div>
+          <div class="nb-sub nb-mission" id="nb-mission" hidden></div>
+        </div>
+      </section>
+
+      <!-- Beepnik: the transmission readout, the gauges and its status lamps -->
+      <section class="companion" id="companion" aria-labelledby="pet-name" data-activity="idle" data-tab="beepnik">
+        <!-- his card: the scene, what he's saying, ways to talk to him, and his status -->
+        <div class="bp-left nb-card">
+          <svg class="critter" id="critter" viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Your companion"></svg>
+          <div class="bp-pad">
+            <div class="say" id="say" aria-live="polite">
+              <p id="say-text"></p>
+              <div class="say-ft"><b id="say-who">BEEPNIK</b><span id="quip-time"></span><span id="pet-thought"></span><span class="say-wave" id="say-wave" aria-hidden="true"></span></div>
+            </div>
+            <div class="pet-head"><h3 id="pet-name">Your companion</h3><p class="pet-meta" id="pet-meta">Waiting for the pet service to start.</p></div>
+            <div class="bp-acts">
+              <button type="button" class="nb-btn primary" id="ask-record">&#10022; Ask for a record</button>
+              <button type="button" class="nb-btn" id="how-are-you">How are you?</button>
+              <button type="button" class="nb-btn nemo-open" id="nemo-open">Point Nemo</button>
+            </div>
+            <button type="button" class="nb-sub bp-pick" id="bp-pick" hidden></button>
+            <div class="lamps" id="lamps"></div>
+            <div class="nb-sub bp-traits" id="bp-traits" hidden></div>
+            <p class="pet-loves" id="pet-loves"></p>
+          </div>
+        </div>
+        <!-- his needs, his journey, his achievements -->
+        <div class="bp-right">
+          <div class="cluster" id="cluster"></div>
+          <div class="nb-card bp-journey">
+            <div class="nb-sh"><h3>Journey</h3><small id="journey-since"></small></div>
+            <ol class="journey" id="journey"></ol>
+          </div>
+          <div class="nb-card bp-ach">
+            <div class="nb-sh"><h3>Achievements</h3><small id="ach-count"></small></div>
+            <div class="ach" id="ach"></div>
+            <div class="nb-sub ach-next" id="ach-next" hidden></div>
+          </div>
+        </div>
+        <div class="mission" id="mission" hidden>
+          <span class="mission-tag">MISSION</span>
+          <div class="mission-goal"><b id="mission-goal"></b><small id="mission-reward"></small></div>
+          <div class="mission-prog" id="mission-prog"></div>
+          <div class="mission-left" id="mission-left"></div>
+        </div>
+        <!-- The transmission log, as a terminal: Beepnik, Ground Control and system lines -->
+        <div class="nb-card bp-log">
+          <div class="pet-foot">
+            <button type="button" class="log-toggle" id="log-toggle" aria-expanded="false" aria-controls="term">Transmission log</button>
+          </div>
+          <div class="term" id="term" hidden>
+            <div class="term-bar"><b>UPLINK</b><span id="term-host">transmission log</span><span class="sp"></span>
+              <span class="term-tabs" id="term-tabs" role="tablist" aria-label="Show">
+                <button type="button" role="tab" data-voice="all" aria-selected="true">ALL</button>
+                <button type="button" role="tab" data-voice="beepnik" aria-selected="false">BEEPNIK</button>
+                <button type="button" role="tab" data-voice="ground" aria-selected="false">GROUND</button>
+                <button type="button" role="tab" data-voice="system" aria-selected="false">SYSTEM</button>
+              </span></div>
+            <div class="term-body" id="term-body"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Flight log: the month on a radar scope, beside the listening log -->
+      <section class="panel flight" aria-labelledby="flight-title" data-tab="log">
+        <div class="flight-grid">
+          <div class="flight-left nb-card">
+            <div class="flight-head nb-sh"><h3 id="flight-title">Flight log</h3>
+              <button type="button" class="chip-btn" id="unmatched-open" hidden>Unmatched</button></div>
+            <p class="note flight-sum" id="flight-summary"></p>
+            <div class="radar glassbox"><svg id="radar" viewBox="0 0 470 470" role="img" aria-label="The last 30 days of listening"></svg><div class="pix"></div><div class="shine"></div></div>
+            <div class="radar-stats" id="radar-stats"></div>
+            <div class="stylus" id="stylus" hidden title="Hours of play on the stylus, against its rated life">
+              <div class="stylus-top"><span>STYLUS</span><b id="stylus-hours"></b></div>
+              <div class="stylus-bar"><i id="stylus-fill"></i></div>
+              <small id="stylus-note"></small>
+            </div>
+          </div>
+          <div class="flight-right">
+            <div class="nb-card month-card">
+              <div class="nb-sh"><h3>The last 30 days</h3><small id="month-note">minutes per day</small></div>
+              <div class="monthbars" id="month" role="img" aria-label="Minutes listened each day, the last 30 days"></div>
+              <div class="month-axis"><span>30 days ago</span><span>Today</span></div>
+            </div>
+            <div class="nb-card sessions-card"><div class="flight-log" id="flight-log"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The cargo hold: dig through the dusty records, then open the whole hold -->
+      <section class="panel crate" aria-labelledby="crate-title" data-tab="cargo">
+        <h3 id="crate-title">Gathering dust</h3>
+        <div class="dig-wrap" id="dig-wrap">
+          <div class="dig" id="dig"></div>
+          <div class="dig-info" id="dig-info"></div>
+        </div>
+        <div class="cratebar">
+          <h4>Your cargo</h4>
+          <p id="crate-summary"></p>
+          <label class="search"><span class="sr-only">Search your records</span>
+            <input type="search" id="crate-q" placeholder="Search artist, title, style or label" autocomplete="off"></label>
+          <button type="button" class="crate-toggle" id="crate-toggle" aria-expanded="false">Show the cargo &#9662;</button>
+        </div>
+        <div class="crate-body" id="crate-body" hidden>
+          <div class="crate-tools">
+            <label class="select"><span class="sr-only">Sort records</span>
+              <select id="crate-sort">
+                <option value="added">Recently added</option>
+                <option value="artist">Artist</option>
+                <option value="title">Title</option>
+                <option value="year">Year</option>
+                <option value="plays">Most played</option>
+                <option value="recent">Recently played</option>
+                <option value="dusty">Longest since played</option>
+              </select></label>
+            <label class="check"><input type="checkbox" id="crate-unplayed"> Never played</label>
+          </div>
+          <div class="sleeves" id="crate-grid"></div>
+          <button type="button" class="more" id="crate-more" hidden>Show more records</button>
+        </div>
+      </section>
+
+      <section class="panel logbook" aria-labelledby="logbook-title" data-tab="stars">
+        <div class="logbook-head">
+          <h3 id="logbook-title">Cosmic logbook</h3>
+          <p class="note" id="logbook-summary"></p>
+        </div>
+        <p class="note logbook-lede">Every record in your cargo is a star system in its genre's constellation. Spins make stars brighter; faint rings are records waiting for their first spin. The gold trail is the probe's recent journey through your first spins.</p>
+        <div class="logbook-tools">
+          <label class="search"><span class="sr-only">Search the stars</span>
+            <input type="search" id="chart-q" placeholder="Search the stars" autocomplete="off"></label>
+          <div class="zoom-btns">
+            <button type="button" id="chart-in" aria-label="Zoom in">+</button>
+            <button type="button" id="chart-out" aria-label="Zoom out">&minus;</button>
+            <button type="button" id="chart-reset" aria-label="Reset view">&#8634;</button>
+          </div>
+          <button type="button" class="chip-btn" id="chart-path" aria-pressed="false">Full flight path</button>
+        </div>
+        <div class="sector-chips" id="chart-sectors"></div>
+        <div class="chart-wrap">
+          <svg id="chart" role="img" aria-label="Star chart of your record collection"></svg>
+          <div class="chart-tip" id="chart-tip" hidden>
+            <img alt="">
+            <div><b></b><span class="t-artist"></span><span class="t-spins"></span><em></em>
+              <button type="button" class="tip-open">Open the record</button></div>
+          </div>
+        </div>
+        <p class="note chart-help">Drag to pan, scroll or pinch to zoom. Click a star to pin its system open; click it again to open the record, or empty sky to let go.</p>
+      </section>
+
+
+    </main>
+  </div>
+
+  <!-- The record picker: tag what's playing, check off tracks, fill a gap -->
+  <!-- mobile: the tab bar -->
+  <nav class="mtabs" id="mtabs" aria-label="Sections" hidden>
+    <button type="button" data-tab="now"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg><span>Now</span></button>
+    <button type="button" data-tab="beepnik"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7V3M3 13h3M18 13h3M9 19l-2 3M15 19l2 3" stroke="currentColor" stroke-width="2" fill="none"/></svg><span>Beepnik</span></button>
+    <button type="button" data-tab="log"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 12 L18 7" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".6"/></svg><span>Log</span></button>
+    <button type="button" data-tab="cargo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 11h18M9 4h6" stroke="currentColor" stroke-width="2"/></svg><span>Cargo</span></button>
+    <button type="button" data-tab="stars"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L3.4 9.3l6-.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Stars</span></button>
+  </nav>
+
+  <dialog class="panel pick-dlg" id="pick-dlg" aria-labelledby="pick-title">
+    <div class="pick-head">
+      <h3 id="pick-title">Tag this record</h3>
+      <button type="button" class="dlg-close" id="pick-close" aria-label="Close">&times;</button>
+    </div>
+    <p class="note" id="pick-hint"></p>
+    <label class="search pick-search"><span class="sr-only">Search the cargo hold</span>
+      <input type="search" id="pick-q" placeholder="Search the cargo hold: artist or title" autocomplete="off"></label>
+    <ul class="pick-results" id="pick-results"></ul>
+    <div class="pick-record" id="pick-record" hidden>
+      <div class="pick-rec-head" id="pick-rec-head"></div>
+      <ol class="pick-tracks" id="pick-tracks"></ol>
+    </div>
+    <div class="pick-foot">
+      <p class="note" id="pick-status" role="status"></p>
+      <button type="button" class="btn ghost" id="pick-back" hidden>Different record</button>
+      <button type="button" class="btn" id="pick-ok" disabled>Save</button>
+    </div>
+  </dialog>
+
+  <!-- Unmatched plays: link them to records (and teach the matcher), or set them aside -->
+  <dialog class="panel unm-dlg" id="unm-dlg" aria-labelledby="unm-title">
+    <div class="pick-head">
+      <h3 id="unm-title">Unmatched plays</h3>
+      <button type="button" class="dlg-close" id="unm-close" aria-label="Close">&times;</button>
+    </div>
+    <p class="note">Shazam named these, but they didn't link to a record in your cargo hold. Link each to the right record, and the matcher remembers it for next time; or set false matches aside.</p>
+    <div class="unm-list" id="unm-list"></div>
+  </dialog>
+
+  <!-- Point Nemo: the satellite graveyard -->
+  <dialog class="panel nemo-dlg" id="nemo-dlg" aria-labelledby="nemo-title">
+    <div class="pick-head">
+      <h3 id="nemo-title">Point Nemo</h3>
+      <button type="button" class="dlg-close" id="nemo-close" aria-label="Close">&times;</button>
+    </div>
+    <p class="note">The spacecraft graveyard: 48&deg;52&prime;S 123&deg;23&prime;W, the spot in the Pacific farthest from any land, where old satellites are brought down to rest. Every probe that ran out of fuel lies here.</p>
+    <div class="nemo-list" id="nemo-list"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <!-- Session playback: the last few recorded sessions, with a marker per track -->
+  <!-- Session playback: a floating player, full or collapsed -->
+  <div class="deck" id="deck" role="region" aria-label="Session playback" hidden>
+    <div class="deck-head">
+      <img class="deck-cover" id="deck-cover" alt="">
+      <div class="deck-t"><b id="deck-track"></b><span id="deck-sub"></span></div>
+      <div class="deck-mini">
+        <button type="button" class="dbtn" data-act="prev" aria-label="Previous track"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zM9.5 12L18 6v12z"/></svg></button>
+        <button type="button" class="dbtn dplay" data-act="play" aria-label="Play"></button>
+        <button type="button" class="dbtn" data-act="next" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6v12l8.5-6z"/></svg></button>
+      </div>
+      <button type="button" class="dbtn dsize" id="deck-size" aria-label="Collapse the player" aria-expanded="true"><svg viewBox="0 0 24 24"><path d="M7.4 8.6L12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></button>
+      <button type="button" class="dbtn dclose" id="deck-close" aria-label="Close the player"><svg viewBox="0 0 24 24"><path d="M6.4 5L5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12 19 6.4 17.6 5 12 10.6z"/></svg></button>
+    </div>
+    <div class="deck-body">
+      <div class="deck-scrub" id="deck-line" role="slider" tabindex="0" aria-label="Position in the session" aria-valuemin="0">
+        <div class="deck-rail"><div class="deck-segs" id="deck-segs"></div><div class="deck-fill" id="deck-fill"></div></div>
+        <div class="deck-thumb" id="deck-thumb"></div>
+      </div>
+      <div class="deck-times"><span id="deck-pos">0:00</span><button type="button" class="deck-tracks" id="deck-tracks" aria-expanded="false"></button><span id="deck-left"></span></div>
+      <div class="deck-ctrls">
+        <button type="button" class="dbtn" data-act="prev" aria-label="Previous track"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zM9.5 12L18 6v12z"/></svg></button>
+        <button type="button" class="dbtn" data-act="back" aria-label="Back 15 seconds"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/><text x="9" y="16" font-size="6" font-weight="900">15</text></svg></button>
+        <button type="button" class="dbtn dplay big" data-act="play" aria-label="Play"></button>
+        <button type="button" class="dbtn" data-act="fwd" aria-label="Forward 15 seconds"><svg viewBox="0 0 24 24"><path d="M12 5V2l5 4-5 4V7a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8z"/><text x="9" y="16" font-size="6" font-weight="900">15</text></svg></button>
+        <button type="button" class="dbtn" data-act="next" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 6v12l8.5-6z"/></svg></button>
+      </div>
+    </div>
+    <div class="deck-thin"><b id="deck-thin"></b></div>
+    <ol class="deck-list" id="deck-list" hidden></ol>
+  </div>
+  <audio id="rec-audio" preload="metadata"></audio>
+
+  <dialog class="panel record-dlg" id="record-dlg" aria-labelledby="dlg-title">
+    <button type="button" class="dlg-close" id="dlg-close" aria-label="Close">×</button>
+    <div id="dlg-body"></div>
+  </dialog>
+
+  <audio id="player" preload="none"></audio>
+  <script src="/static/probe.js" defer></script>
+  <script src="/static/chart.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

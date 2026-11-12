@@ -1,0 +1,113 @@
+/* Nebula: Turntable-1's design system. Loaded first by every page; the other stylesheets build on it.
+
+   Colour   deep indigo space, starlight gold, and one colour per need, used for that need only:
+            fuel gold, variety sky, curiosity comet pink, taste lilac.
+   Type     Righteous for display, Nunito for text, a monospace for Ground Control's readouts.
+   Layout   a 12-column grid with 24 px gutters and 44 px margins; cards 24 px apart with 24 px
+            inside; panels within cards 12 px apart; 16 px under section headings.
+   Shape    24 px card corners, 16 px panels, 12 px thumbnails, pills; a 1.5 px hairline instead
+            of hard shadows; soft drop shadows only under artwork. */
+
+:root {
+  /* space */
+  --nb-bg-top:   #16123a;
+  --nb-bg:       #100d2b;
+  --nb-bg-deep:  #0b0a1f;
+  --nb-panel:    rgba(38, 31, 92, .72);
+  --nb-panel-solid: #221c55;
+  --nb-sub:      rgba(30, 25, 76, .8);
+  --nb-tape:     #0f0c25;
+  --nb-line:     #352c78;
+  --nb-line-soft:#2a2366;
+  --nb-track:    #2c255f;
+
+  /* text */
+  --nb-text:  #f4eefe;
+  --nb-muted: #a99fd0;
+  --nb-dim:   #7b72a8;
+  --nb-ink:   #1b1440;      /* text on gold */
+
+  /* accents */
+  --nb-gold:  #ffcf6b;
+  --nb-pink:  #ff7a9c;
+  --nb-sky:   #7fa7ff;
+  --nb-lilac: #c3b8ee;
+  --nb-mint:  #8fe3c0;
+
+  /* the needs: each its own colour, everywhere it appears */
+  --nb-fuel:      var(--nb-gold);
+  --nb-variety:   var(--nb-sky);
+  --nb-curiosity: var(--nb-pink);
+  --nb-taste:     var(--nb-lilac);
+
+  /* type */
+  --nb-display: "Righteous", "Trebuchet MS", system-ui, sans-serif;
+  --nb-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --nb-mono: ui-monospace, "SFMono-Regular", "DejaVu Sans Mono", Menlo, monospace;
+
+  /* shape */
+  --nb-r-card: 24px;
+  --nb-r-panel: 16px;
+  --nb-r-small: 12px;
+  --nb-r-tiny: 6px;
+  --nb-r-pill: 999px;
+  --nb-hairline: inset 0 0 0 1.5px var(--nb-line);
+  --nb-shadow-art: 0 18px 44px rgba(4, 3, 18, .5);
+
+  /* space between things */
+  --nb-margin: 44px;
+  --nb-gap: 24px;
+  --nb-pad: 24px;
+  --nb-gap-in: 12px;
+  --nb-gap-head: 16px;
+}
+@media (max-width: 700px) {
+  :root { --nb-margin: 16px; --nb-gap: 12px; --nb-pad: 16px; }
+}
+
+/* the sky: indigo, a little starlight, two soft nebulae */
+.nb-sky {
+  background-color: var(--nb-bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.5) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 80%, rgba(255,255,255,.32) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 45% 55%, rgba(255,207,107,.38) 0 1px, transparent 1.6px),
+    radial-gradient(42% 34% at 82% 6%, rgba(255,122,156,.2), transparent 70%),
+    radial-gradient(48% 40% at 12% 96%, rgba(127,167,255,.17), transparent 70%),
+    linear-gradient(160deg, var(--nb-bg-top) 0%, var(--nb-bg) 50%, var(--nb-bg-deep) 100%);
+  background-size: 170px 170px, 230px 230px, 310px 310px, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat: repeat, repeat, repeat, no-repeat, no-repeat, no-repeat;
+  min-height: 100vh;
+}
+
+/* --- components (Phases 2 to 5 build the screens from these) ------------------------------- */
+.nb-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--nb-gap); }
+.nb-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--nb-gap); }
+.nb-stack { display: flex; flex-direction: column; gap: var(--nb-gap-in); }
+
+.nb-card { background: var(--nb-panel); border-radius: var(--nb-r-card); box-shadow: var(--nb-hairline); padding: var(--nb-pad); min-width: 0; }
+.nb-sub { background: var(--nb-sub); border-radius: var(--nb-r-panel); box-shadow: inset 0 0 0 1px var(--nb-line); padding: 14px 16px; min-width: 0; }
+
+.nb-k { font-size: 11px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; color: var(--nb-gold); }
+.nb-muted { color: var(--nb-muted); }
+.nb-display { font-family: var(--nb-display); font-weight: 400; }
+
+.nb-sh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: var(--nb-gap-head); }
+.nb-sh h3 { font-family: var(--nb-display); font-weight: 400; font-size: 22px; line-height: 1; color: var(--nb-gold); margin: 0; }
+.nb-sh small { font-size: 13px; font-weight: 800; color: var(--nb-muted); }
+
+.nb-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 20px; border: 0; border-radius: var(--nb-r-pill);
+          font: 900 14.5px/1 var(--nb-body); white-space: nowrap; cursor: pointer; background: transparent; color: var(--nb-text); box-shadow: var(--nb-hairline); }
+.nb-btn.primary { background: var(--nb-gold); color: var(--nb-ink); box-shadow: none; }
+.nb-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: var(--nb-r-pill); font-size: 12.5px; font-weight: 800;
+           box-shadow: inset 0 0 0 1.5px var(--nb-line); color: var(--nb-muted); }
+
+.nb-bubble { background: var(--nb-sub); border-radius: var(--nb-r-panel); box-shadow: inset 0 0 0 2px var(--nb-gold); padding: 14px 18px; font-weight: 800; line-height: 1.4; }
+.nb-tape { background: var(--nb-tape); border-radius: var(--nb-r-panel); box-shadow: inset 0 0 0 1px var(--nb-line); font-family: var(--nb-mono); color: var(--nb-sky); }
+
+.nb-bar { height: 8px; border-radius: var(--nb-r-pill); background: var(--nb-track); overflow: hidden; }
+.nb-bar > i { display: block; height: 100%; border-radius: inherit; background: var(--nb-gold); }
+.nb-bar.fuel > i { background: var(--nb-fuel); }
+.nb-bar.variety > i { background: var(--nb-variety); }
+.nb-bar.curiosity > i { background: var(--nb-curiosity); }
+.nb-bar.taste > i { background: var(--nb-taste); }
